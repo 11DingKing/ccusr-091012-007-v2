@@ -94,6 +94,20 @@ def generate_daily_report():
     logger.info(f"每日报表生成完成: {yesterday}")
 
 
+def generate_retention_disposal_plans():
+    """
+    生成处置计划 - 定时任务
+    每天凌晨4点执行，为已到期的保管记录自动生成处置计划
+    """
+    from apps.retention.services import generate_disposal_plans
+
+    logger.info("开始执行处置计划生成定时任务...")
+
+    plans = generate_disposal_plans()
+
+    logger.info(f"处置计划生成完成，新增计划: {len(plans)} 条")
+
+
 def clean_old_logs():
     """
     清理旧日志 - 定时任务
