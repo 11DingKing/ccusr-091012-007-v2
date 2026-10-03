@@ -4,6 +4,17 @@
 from django.db import models
 from apps.authentication.models import User
 
+# 保管期限规则领域模型（RetentionRule / CustodyItem / CustodyHold /
+# RetentionExtension / DisposalPlan / DisposalRequest）
+from .retention_models import (  # noqa: F401
+    CustodyHold,
+    CustodyItem,
+    DisposalPlan,
+    DisposalRequest,
+    RetentionExtension,
+    RetentionRule,
+)
+
 
 class Unit(models.Model):
     """单位模型"""

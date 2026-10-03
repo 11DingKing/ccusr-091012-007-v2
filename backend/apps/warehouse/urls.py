@@ -10,6 +10,15 @@ from .views import (
     DashboardView, GoodsListView, StockInListView, StockOutListView,
     WarningListView, ApprovalListView
 )
+from .retention_views import (
+    RetentionRuleListCreateView, RetentionRuleDetailView, RetentionRuleResolveView,
+    CustodyItemListCreateView, CustodyItemDetailView,
+    CustodyScheduleView, CustodyTimelineView,
+    CustodyHoldCreateView, CustodyHoldLiftView,
+    ExtensionCreateView,
+    DisposalPlanListGenerateView, DisposalPlanDetailView, CustodyGeneratePlanView,
+    DisposalRequestListCreateView, DisposalRequestDecisionView,
+)
 
 urlpatterns = [
     # 仪表盘
@@ -48,4 +57,32 @@ urlpatterns = [
     
     # 审批管理
     path('approvals/', ApprovalListView.as_view(), name='approval-list'),
+
+    # 保管期限规则（带生效日期、支持换版）
+    path('retention/rules/', RetentionRuleListCreateView.as_view(), name='retention-rule-list'),
+    path('retention/rules/resolve/', RetentionRuleResolveView.as_view(), name='retention-rule-resolve'),
+    path('retention/rules/<int:pk>/', RetentionRuleDetailView.as_view(), name='retention-rule-detail'),
+
+    # 保管物资
+    path('custody-items/', CustodyItemListCreateView.as_view(), name='custody-item-list'),
+    path('custody-items/<int:pk>/', CustodyItemDetailView.as_view(), name='custody-item-detail'),
+    path('custody-items/<int:pk>/schedule/', CustodyScheduleView.as_view(), name='custody-item-schedule'),
+    path('custody-items/<int:pk>/timeline/', CustodyTimelineView.as_view(), name='custody-item-timeline'),
+    path('custody-items/<int:pk>/holds/', CustodyHoldCreateView.as_view(), name='custody-hold-create'),
+    path('custody-items/<int:pk>/extensions/', ExtensionCreateView.as_view(), name='custody-extension-create'),
+    path('custody-items/<int:pk>/generate-plan/', CustodyGeneratePlanView.as_view(), name='custody-generate-plan'),
+    path('custody-items/<int:pk>/disposal-requests/', DisposalRequestListCreateView.as_view(),
+         name='custody-disposal-requests'),
+
+    # 暂停解除
+    path('custody-holds/<int:pk>/lift/', CustodyHoldLiftView.as_view(), name='custody-hold-lift'),
+
+    # 处置计划
+    path('disposal-plans/', DisposalPlanListGenerateView.as_view(), name='disposal-plan-list'),
+    path('disposal-plans/<int:pk>/', DisposalPlanDetailView.as_view(), name='disposal-plan-detail'),
+
+    # 销毁申请审批
+    path('disposal-requests/', DisposalRequestListCreateView.as_view(), name='disposal-request-list'),
+    path('disposal-requests/<int:pk>/decision/', DisposalRequestDecisionView.as_view(),
+         name='disposal-request-decision'),
 ]
